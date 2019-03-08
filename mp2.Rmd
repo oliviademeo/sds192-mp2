@@ -18,6 +18,7 @@ load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
+glimpse(house_elections)
 ```
 
 > Word count: `r wordcountaddin::word_count()`
