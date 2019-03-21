@@ -1,24 +1,38 @@
 ---
 title: "Mini-Project 2"
-author: "Your Name Here"
+author: "Olivia Demeo and Lilly Farah"
 date: "2019-03-24"
 output: 
   html_document:
-    code_folding: show
+    code_folding: hide
 ---
 
 
-## Loading the data
+## Loading the Data
 
-This project is so interesting and relevant to my life!
-
-```{r, message=FALSE}
+```{r message=FALSE}
 library(tidyverse)
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
+load("individuals.rda")
 glimpse(house_elections)
 ```
 
+##Data Set Up
+
+```{r message = FALSE}
+
+com_amts <- contributions %>%
+  group_by(name) %>%
+  summarize(don = n(), total_don = sum(n))
+
+ind_amts <- contributions %>%
+  group_by(name) %>%
+  summarize(don = n(), total_don = sum(n))
+
+total_dons()
+
+```
 > Word count: `r wordcountaddin::word_count()`
