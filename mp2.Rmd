@@ -1,23 +1,45 @@
 ---
 title: "Mini-Project 2"
-author: "Your Name Here"
+author: "Olivia Demeo and Lilly Farah"
 date: "2019-03-24"
-output: 
+output:
   html_document:
-    code_folding: show
+    code_folding: hide
 ---
 
 
-## Loading the data
+## Loading the Data
 
-This project is so interesting and relevant to my life!
-
-```{r, message=FALSE}
+```{r message=FALSE}
 library(tidyverse)
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
+load("individuals.rda")
+```
+
+##Data Set Up
+
+```{r message = FALSE}
+contributions <- contributions %>%
+  group_by("cand_id")
+ 
+candidates <- candidates %>% group_by("cand_id")
+
+big_tab <- candidates %>% full_join(contributions, by = "cand_id") %>% arrange(desc(transaction_amt))
+
+big_tab <- big_tab %>%
+  select(cand_id, cand_name, cand_state, transaction_amt, cand_party_affiliation) %>%
+  filter(cand_party_affiliation == "DEM" | cand_party_affiliation == "REP") %>%
+  group_by(cand_state) %>%
+  mutate(statemean = mean(transaction_amt))
+
+
+ggplot(big_tab, aes(x = cand_state, y = transaction_amt, color = cand_party_affiliation)) +
+  geom_point()
+  
+
 ```
 
 > Word count: `r wordcountaddin::word_count()`
